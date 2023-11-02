@@ -97,9 +97,9 @@ export const typeDefs = gql`
     listing(id: ID!): Listing!
     listings(
       location: String
-      filter: ListingFilter!
-      limit: Int!
-      page: Int!
+      filter: ListingFilter
+      limit: Int
+      page: Int
     ): Listings!
   }
 
