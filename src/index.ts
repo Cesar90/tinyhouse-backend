@@ -19,10 +19,17 @@ const mount = async(app: Application) => {
   app.use(bodyParser.json({ limit: "2mb" }));
   app.use(cookieParser(process.env.SECRET));
   app.use(compression());
-  const server = new ApolloServer({ typeDefs, resolvers, context: () => ({ db }), playground: true,
+  const server = new ApolloServer({
+    typeDefs, resolvers, context: () => ({ db }), playground: true,
   introspection: true, });
   // server.applyMiddleware({ app, path: '/api' })
-  server.applyMiddleware({ app, path: '/api' })
+  server.applyMiddleware({
+    cors: {
+      origin: ["https://cesar-tinyhouse.netlify.app", "http://localhost:3000"],
+      credentials: true,
+    },
+    app, path: '/api' 
+  })
   app.listen(process.env.PORT)
   console.log(`[app]:http://localhost:${process.env.PORT}`)
 
