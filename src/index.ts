@@ -4,6 +4,7 @@ import express, { Application } from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import compression from "compression";
+import cors from 'cors';
 import { ApolloServer } from "apollo-server-express";
 import { connectDatabase } from "./database";
 import { typeDefs, resolvers } from "./graphql";
@@ -16,7 +17,15 @@ import { typeDefs, resolvers } from "./graphql";
 const app = express();
 const mount = async(app: Application) => {
   const db = await connectDatabase()
+  // options for cors middleware
+  const options: cors.CorsOptions = {
+    origin: [
+      "https://cesar-tinyhouse.netlify.app",
+      "https://main--cesar-tinyhouse.netlify.app",
+      "http://localhost:3000"],
+  };
   app.use(bodyParser.json({ limit: "2mb" }));
+  app.use(cors(options));
   app.use(cookieParser(process.env.SECRET));
   app.use(compression());
   const server = new ApolloServer({
