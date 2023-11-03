@@ -25,7 +25,10 @@ const mount = async(app: Application) => {
   // server.applyMiddleware({ app, path: '/api' })
   server.applyMiddleware({
     cors: {
-      origin: '*',
+      origin: [
+        "https://cesar-tinyhouse.netlify.app",
+        "https://main--cesar-tinyhouse.netlify.app",
+        "http://localhost:3000"],
       credentials: true,
     },
     app, path: '/api' 
